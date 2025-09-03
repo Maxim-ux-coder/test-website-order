@@ -648,6 +648,13 @@
   © 2025. Все права защищены.
 </footer>
 
+<div class="fullscreen-modal" id="fullscreenModal">
+  <div class="fullscreen-content">
+    <button class="fullscreen-close" id="fullscreenClose">×</button>
+    <img id="fullscreenImage" src="" alt="Fullscreen">
+  </div>
+</div>
+
 <script>
     function openVideoModal(videoId) {
     const modal = document.getElementById("videoModal");
@@ -673,6 +680,87 @@
     modal.classList.remove("active");
     container.innerHTML = ""; // stop video
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+  function initCarousel(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    const container = carousel.querySelector(".carousel-container");
+    const items = carousel.querySelectorAll(".carousel-item");
+    const dotsContainer = carousel.querySelector(".carousel-dots");
+
+    let index = 0;
+    const total = items.length;
+
+    dotsContainer.innerHTML = "";
+    items.forEach((_, i) => {
+      const dot = document.createElement("div");
+      dot.classList.add("carousel-dot");
+      if (i === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateCarousel() {
+      container.style.transform = `translateX(-${index * 100}%)`;
+      const dots = dotsContainer.querySelectorAll(".carousel-dot");
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+    }
+
+    function goToSlide(i) {
+      index = (i + total) % total;
+      updateCarousel();
+    }
+
+    carousel.querySelector(".prev").addEventListener("click", () => goToSlide(index - 1));
+    carousel.querySelector(".next").addEventListener("click", () => goToSlide(index + 1));
+
+
+    let startX = 0;
+    container.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+    container.addEventListener("touchend", e => {
+      let endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) goToSlide(index + 1); // ձախ swipe
+      if (endX - startX > 50) goToSlide(index - 1); // աջ swipe
+    });
+
+
+    let isDown = false;
+    let mouseStartX = 0;
+    container.addEventListener("mousedown", e => {
+      isDown = true;
+      mouseStartX = e.clientX;
+    });
+    container.addEventListener("mouseup", e => {
+      if (!isDown) return;
+      isDown = false;
+      let diff = e.clientX - mouseStartX;
+      if (diff > 50) goToSlide(index - 1);
+      if (diff < -50) goToSlide(index + 1);
+    });
+
+    updateCarousel();
+  }
+
+  initCarousel("imageCarousel");
+});
+  function openFullscreen(img) {
+  const modal = document.getElementById('fullscreenModal');
+  const modalImg = document.getElementById('fullscreenImage');
+  modalImg.src = img.src;
+  modal.classList.add('active');
+}
+
+// Close modal
+document.getElementById('fullscreenClose').addEventListener('click', () => {
+  document.getElementById('fullscreenModal').classList.remove('active');
+});
+
+// Close clicking outside image
+document.getElementById('fullscreenModal').addEventListener('click', e => {
+  if (e.target.id === 'fullscreenModal') {
+    document.getElementById('fullscreenModal').classList.remove('active');
+  }
+});
 </script>
 </body>
 </html>
