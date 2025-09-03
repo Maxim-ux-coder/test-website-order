@@ -17,6 +17,88 @@
       text-align: center;
       line-height: 1.6;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background images */
+    .bg-image-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60vh;
+      background-image: url('header-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      opacity: 0.15;
+      filter: blur(1px);
+    }
+
+    .bg-image-top::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 0%, transparent 40%, rgba(13,13,13,0.8) 60%, rgba(13,13,13,0.9) 80%);
+      z-index: 1;
+    }
+
+    .bg-image-top::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(135deg, transparent 0%, rgba(13,13,13,0.3) 30%, rgba(13,13,13,0.7) 70%, #0d0d0d 100%);
+      z-index: 2;
+      clip-path: polygon(0 0, 100% 20px, 100% 100%, 0 100%);
+    }
+
+    .bg-image-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50vh;
+      background-image: url('footer-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      opacity: 0.12;
+      filter: blur(1px);
+    }
+
+    .bg-image-bottom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(225deg, transparent 0%, transparent 30%, rgba(13,13,13,0.7) 50%, rgba(13,13,13,0.9) 80%);
+      z-index: 1;
+    }
+
+    .bg-image-bottom::after {
+      content: '';
+      position: absolute;
+      top: -25px;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(45deg, #0d0d0d 0%, rgba(13,13,13,0.8) 40%, rgba(13,13,13,0.4) 70%, transparent 100%);
+      z-index: 2;
+      clip-path: polygon(0 0, 100% 0, 100% 25px, 0 100%);
+    }
+
+    /* Content wrapper to ensure proper layering */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
     }
 
     h1, h2 {
@@ -65,7 +147,7 @@
       text-shadow: 0 0 10px #d4af37;
     }
 
-    /* Media carousel */
+    /* Media carousel - modified for vertical layout */
     .media-carousel {
       position: relative;
       margin: 30px 0;
@@ -75,13 +157,39 @@
     
     .carousel-container {
       display: flex;
-      transition: transform 0.3s ease;
+      flex-direction: column;
+      gap: 20px;
+      transition: none;
+      max-height: 500px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1a1a1a;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .carousel-container::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 10px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 10px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb:hover {
+      background: #f5d742;
     }
     
     .carousel-item {
-      min-width: 100%;
+      width: 100%;
       display: flex;
       justify-content: center;
+      flex-shrink: 0;
     }
     
     .carousel-item img, .carousel-item video {
@@ -93,9 +201,10 @@
       box-shadow: 0 0 25px rgba(212,175,55,.5);
       object-fit: contain;
       margin: 0 auto;
+      transition: transform .3s ease;
     }
     
-    .carousel-item img:hover {
+    .carousel-item img:hover, .carousel-item video:hover {
       transform: scale(1.03);
     }
 
@@ -103,54 +212,13 @@
       box-shadow: 0 0 20px rgba(245,215,66,.3);
     }
 
+    /* Remove navigation buttons and dots for vertical layout */
     .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(212,175,55,0.8);
-      color: #1a1a1a;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-      z-index: 10;
-    }
-
-    .carousel-nav:hover {
-      background: rgba(212,175,55,1);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .carousel-prev {
-      left: 10px;
-    }
-
-    .carousel-next {
-      right: 10px;
+      display: none;
     }
 
     .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    .carousel-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(212,175,55,0.4);
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .carousel-dot.active {
-      background: #d4af37;
-      transform: scale(1.2);
+      display: none;
     }
 
     /* Single image stack for product images */
@@ -267,10 +335,22 @@
         max-width: 100%;
         max-height: 250px;
       }
+      .bg-image-top {
+        height: 50vh;
+      }
+      .bg-image-bottom {
+        height: 40vh;
+      }
     }
   </style>
 </head>
 <body>
+
+<!-- Background images -->
+<div class="bg-image-top"></div>
+<div class="bg-image-bottom"></div>
+
+<div class="content-wrapper">
 
 <!-- Заголовок -->
 <section>
@@ -284,7 +364,7 @@
   <p>Мы - первое в РФ производство светящихся картин на Art-металле.</p>
   <p>По идеям блогера мы бесплатно создаем серийные образцы Артов. Выглядит это вот так:</p>
 
-  <!-- Медиаблок карусель -->
+  <!-- Медиаблок карусель - теперь вертикальная -->
   <div class="media-carousel" id="videoCarousel">
     <div class="carousel-container">
       <div class="carousel-item">
@@ -315,9 +395,6 @@
         <video src="vid(9).mp4" controls muted preload="metadata"></video>
       </div>
     </div>
-    <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">‹</button>
-    <button class="carousel-nav carousel-next" onclick="changeSlide(1)">›</button>
-    <div class="carousel-dots" id="carouselDots"></div>
   </div>
 
   <p>Собираем комплект из артов и светящейся подставки, отправляем блогеру. Блогер делает привычный контент, иногда интегрируя в него продукт. Позиционирует его как собственный. Как творческий эксперимент, как новое хобби, как новая идея для коллекции и тд.</p>
@@ -357,7 +434,7 @@
   
   <p>Расшифровку всех законов от ФАС можно скачать тут:</p>
 
-  <!-- ФАС блок картинки карусель -->
+  <!-- ФАС блок картинки - теперь тоже вертикальная -->
   <div class="media-carousel" id="imageCarousel">
     <div class="carousel-container">
       <div class="carousel-item">
@@ -373,9 +450,6 @@
         <img src="4.jpg" alt="ФАС 4">
       </div>
     </div>
-    <button class="carousel-nav carousel-prev" onclick="changeImageSlide(-1)">‹</button>
-    <button class="carousel-nav carousel-next" onclick="changeImageSlide(1)">›</button>
-    <div class="carousel-dots" id="imageCarouselDots"></div>
   </div>
 </section>
 
@@ -414,74 +488,9 @@
   © 2025. Все права защищены.
 </footer>
 
+</div>
+
 <script>
-let currentVideoSlide = 0;
-let currentImageSlide = 0;
-const videoSlides = [];
-const imageSlides = [];
-
-// Функции для видео карусели
-function changeSlide(direction) {
-  const videoSlides = document.querySelectorAll('#videoCarousel .carousel-item');
-  
-  if (videoSlides.length === 0) return;
-  
-  currentVideoSlide += direction;
-  
-  if (currentVideoSlide >= videoSlides.length) {
-    currentVideoSlide = 0;
-  } else if (currentVideoSlide < 0) {
-    currentVideoSlide = videoSlides.length - 1;
-  }
-  
-  updateCarousel('videoCarousel', currentVideoSlide);
-  updateDots('carouselDots', currentVideoSlide);
-}
-
-// Функции для картинок карусели
-function changeImageSlide(direction) {
-  const imageSlides = document.querySelectorAll('#imageCarousel .carousel-item');
-  
-  if (imageSlides.length === 0) return;
-  
-  currentImageSlide += direction;
-  
-  if (currentImageSlide >= imageSlides.length) {
-    currentImageSlide = 0;
-  } else if (currentImageSlide < 0) {
-    currentImageSlide = imageSlides.length - 1;
-  }
-  
-  updateCarousel('imageCarousel', currentImageSlide);
-  updateDots('imageCarouselDots', currentImageSlide);
-}
-
-function updateCarousel(carouselId, slideIndex) {
-  const carousel = document.getElementById(carouselId);
-  const container = carousel.querySelector('.carousel-container');
-  container.style.transform = `translateX(-${slideIndex * 100}%)`;
-}
-
-function updateDots(dotsId, activeIndex) {
-  const dots = document.getElementById(dotsId).children;
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].classList.toggle('active', i === activeIndex);
-  }
-}
-
-function goToSlide(carouselType, index) {
-  if (carouselType === 'video') {
-    currentVideoSlide = index;
-    updateCarousel('videoCarousel', currentVideoSlide);
-    updateDots('carouselDots', currentVideoSlide);
-  } else {
-    currentImageSlide = index;
-    updateCarousel('imageCarousel', currentImageSlide);
-    updateDots('imageCarouselDots', currentImageSlide);
-  }
-}
-
-// Автоматическое создание точек навигации при загрузке
 document.addEventListener('DOMContentLoaded', function() {
   // Устанавливаем время для превью видео
   const videos = document.querySelectorAll('video');
@@ -509,30 +518,6 @@ document.addEventListener('DOMContentLoaded', function() {
       video.currentTime = 4;
     });
   });
-
-  // Создаем точки для видео карусели
-  const videoSlides = document.querySelectorAll('#videoCarousel .carousel-item');
-  const videoDots = document.getElementById('carouselDots');
-  
-  for (let i = 0; i < videoSlides.length; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot';
-    if (i === 0) dot.classList.add('active');
-    dot.onclick = () => goToSlide('video', i);
-    videoDots.appendChild(dot);
-  }
-  
-  // Создаем точки для картинок карусели
-  const imageSlides = document.querySelectorAll('#imageCarousel .carousel-item');
-  const imageDots = document.getElementById('imageCarouselDots');
-  
-  for (let i = 0; i < imageSlides.length; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot';
-    if (i === 0) dot.classList.add('active');
-    dot.onclick = () => goToSlide('image', i);
-    imageDots.appendChild(dot);
-  }
 });
 </script>
 
