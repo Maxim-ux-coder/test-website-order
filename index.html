@@ -576,20 +576,28 @@
 
 <!-- Условия -->
 <section>
-  <h2>Твоя выгода: минимум усилий, максимум дохода</h2>
-  <p><b>Комиссия:</b> 50% от чистой прибыли (~2 500 ₽ с комплекта).</p>
-  <p><b>Учёт:</b> за тобой закрепляется Telegram-канал + менеджер, который обслуживает клиентов, а также доступ к отчётности.</p>
-  <p><b>Выплаты:</b> еженедельно, на самозанятый/ИП.</p>
-  <p><b>Твоя задача:</b> нативный контент про арты. Примеры:</p>
+  <h2>Условия</h2>
+  <p><b style="color: #cca610; font-weight: bold;"> Комиссия:</b> 50% от чистой прибыли (~2 500 ₽ с комплекта).</p>
+  <p><b style="color: #cca610; font-weight: bold;"> Учёт:</b> за тобой закрепляется ОТДЕЛЬНЫЙ Telegram-канал + менеджер, который обслуживает клиентов на нем + доступ к отчётности. </p>
+  <p><b style="color: #cca610; font-weight: bold;"> Выплаты:</b> еженедельно, на самозанятый/ИП.</p>
+  <p><b style="color: #cca610; font-weight: bold;"> Твоя единственная задача:</b>нативный контент про новый продукт. Примеры:  </p>
   <ul>
     <li>«Смотрите, какой эксперимент я устроила»</li>
     <li>«Фанаты, угадайте сцену»</li>
     <li>«Вот так свет меняет восприятие арта»</li>
   </ul>
+  <div class="media-stack">
+    <img src="svetilnik2.png" alt="Продукт" onclick="openFullscreen(this)">
+  </div>
   <p>Всё остальное — наше: производство, продажи, отправка клиенту, дожим сомневающихся.</p>
-  <p>Это единственный легальный способ заработка в "запрещенограмме" после 1 сентября 2025 года. В блоге будет простое информирование, обзоры артов, среди прочего уже привычного контента. Никаких цен, никаких призывов купить, только нативно о своих новых увлечениях и экспериментах по созданию артов. Мягкий увод в тг, с формулировкой: "больше моих экспериментов тут." Или: "больше закулисья по теме артов тут". Всеми механиками мы поделимся.</p>
+  <p><b style="color: #cca610; font-weight: bold;">Юридический плюс:</b></p>
+  <p>Это не реклама в аккаунте. Абсолютно законный способ заработка в «запрещенограмме» после 1 сентября 2025 года. 
+    В блоге будет простое информирование и обзоры артов среди привычного контента. 
+    Никаких цен, никаких призывов купить, только нативные истории про «мои любимые сцены» и эксперименты. 
+    Для продаж — мягкий увод в ТГ: «больше моей коллекции тут» или «закулисье по теме артов тут». 
+    Всеми механиками мы поделимся. </p>
   
-  <p>Расшифровку всех законов от ФАС можно скачать тут:</p>
+  <p>Расшифровку всех законов от ФАС можно посмотреть тут.</p>
 
   <!-- ФАС блок картинки с каруселью -->
   <div class="media-carousel" id="imageCarousel">
@@ -761,6 +769,37 @@ document.getElementById('fullscreenModal').addEventListener('click', e => {
     document.getElementById('fullscreenModal').classList.remove('active');
   }
 });
+
+function openFullscreen(img) {
+  const modal = document.getElementById('fullscreenModal');
+  const modalImg = document.getElementById('fullscreenImage');
+
+  modalImg.src = img.src;
+  modal.classList.add('active');
+}
+function closeFullscreen() {
+  const modal = document.getElementById('fullscreenModal');
+  const modalImg = document.getElementById('fullscreenImage');
+
+  modal.classList.remove('active');
+  modalImg.src = ""; // նկարն էլ մաքրում ենք
+}
+
+// Close 
+document.getElementById('fullscreenClose').addEventListener('click', closeFullscreen);
+document.getElementById('fullscreenModal').addEventListener('click', e => {
+  if (e.target.id === 'fullscreenModal') {
+    closeFullscreen();
+  }
+});
+
+// Escape 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeFullscreen();
+  }
+});
+
 </script>
 </body>
 </html>
